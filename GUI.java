@@ -53,26 +53,26 @@ class GUI {
 			JPanel pnlDay = new JPanel();
 			JLabel lblDayName = new JLabel(arrDays[i]);
 			JLabel lblDate = new JLabel(arrDate[i]);
-			JPanel newDay = new JPanel();
+			JPanel pnlTask = new JPanel();
 			JButton btn = new JButton("Add event");
 			
 			//Sätter layout på dags panelerna 
 	        pnlDay.setLayout(new BoxLayout(pnlDay, BoxLayout.Y_AXIS));
 	        //anger hur rundade kanter man vill ha på sina hörn
 	        pnlDay.setBorder(new RoundedBorder(25));
-			newDay.setLayout(new BoxLayout(newDay, BoxLayout.Y_AXIS));
+			pnlTask.setLayout(new BoxLayout(pnlTask, BoxLayout.Y_AXIS));
 	
-			newDay.setMaximumSize(new Dimension(Integer.MAX_VALUE, 500));
+			pnlTask.setMaximumSize(new Dimension(Integer.MAX_VALUE, 500));
 			lblDayName.setAlignmentX(Component.CENTER_ALIGNMENT);
 			lblDate.setAlignmentX(Component.CENTER_ALIGNMENT);
-			newDay.setAlignmentX(Component.CENTER_ALIGNMENT);
+			pnlTask.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btn.setAlignmentX(Component.CENTER_ALIGNMENT);
 			
 			pnlDay.add(lblDayName);
 			pnlDay.add(lblDate);
-			pnlDay.add(newDay);
+			pnlDay.add(pnlTask);
 			pnlDay.add(btn);
-			highlight(pnlDay, newDay, i);
+			highlight(pnlDay, pnlTask, i);
 			container.add(pnlDay);
 			btn.addActionListener(new ActionListener() {
 
@@ -87,16 +87,16 @@ class GUI {
 					remove.setAlignmentX(Component.CENTER_ALIGNMENT);
 					task.setAlignmentX(Component.CENTER_ALIGNMENT);
 					
-					newDay.add(task);
-					newDay.add(remove);
+					pnlTask.add(task);
+					pnlTask.add(remove);
 					pnlDay.revalidate();
 					
 					remove.addActionListener(new ActionListener(){
 						//Tar bort en task när man klickat på "X"
 						public void actionPerformed(ActionEvent e) {
-		                    newDay.remove(task);
-		                    newDay.remove(remove);
-		                    newDay.repaint();
+		                    pnlTask.remove(task);
+		                    pnlTask.remove(remove);
+		                    pnlTask.repaint();
 		                }
 		            });
 				}
