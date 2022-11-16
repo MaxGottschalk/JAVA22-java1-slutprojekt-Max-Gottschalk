@@ -28,11 +28,11 @@ class GUI {
 
 		JPanel dayPanel = new JPanel();	
 
-		BoxLayout pnlLayout = new BoxLayout(dayPanel, BoxLayout.Y_AXIS);
+		BoxLayout panelLayout = new BoxLayout(dayPanel, BoxLayout.Y_AXIS);
 		BoxLayout conlayout = new BoxLayout(container, BoxLayout.X_AXIS);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		dayPanel.setLayout(pnlLayout);
+		dayPanel.setLayout(panelLayout);
 		container.setLayout(conlayout);
 		addNewComponent(dayPanel);	
 		container.add(dayPanel);
@@ -41,41 +41,45 @@ class GUI {
 		frame.add(container);
 		frame.setVisible(true);
 	}
-
+	
 	static void addNewComponent(JPanel panel) {
 
 		String[] arrDays = Calender.weekdays();
 		String[] arrDate = Calender.date();
         
-		for (int i = 0; i < 7; i++) {
+		//Skapar 7 olika dagar med alla komponenter de behöver
+		for (int i = 0; i <= 6; i++) {
 			
-			JPanel pnl = new JPanel();
+			JPanel pnlDay = new JPanel();
 			JLabel lblDayName = new JLabel(arrDays[i]);
 			JLabel lblDate = new JLabel(arrDate[i]);
-			JPanel newPanel = new JPanel();
+			JPanel newDay = new JPanel();
 			JButton btn = new JButton("Add event");
 			
-	        pnl.setLayout(new BoxLayout(pnl, BoxLayout.Y_AXIS));
-	        pnl.setBorder(new RoundedBorder(25));
-			newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+			//Sätter layout på dags panelerna 
+	        pnlDay.setLayout(new BoxLayout(pnlDay, BoxLayout.Y_AXIS));
+	        //anger hur rundade kanter man vill ha på sina hörn
+	        pnlDay.setBorder(new RoundedBorder(25));
+			newDay.setLayout(new BoxLayout(newDay, BoxLayout.Y_AXIS));
 	
-			newPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 500));
+			newDay.setMaximumSize(new Dimension(Integer.MAX_VALUE, 500));
 			lblDayName.setAlignmentX(Component.CENTER_ALIGNMENT);
 			lblDate.setAlignmentX(Component.CENTER_ALIGNMENT);
-			newPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			newDay.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btn.setAlignmentX(Component.CENTER_ALIGNMENT);
 			
-			pnl.add(lblDayName);
-			pnl.add(lblDate);
-			pnl.add(newPanel);
-			pnl.add(btn);
-			highlight(pnl, newPanel, i);
-			container.add(pnl);
+			pnlDay.add(lblDayName);
+			pnlDay.add(lblDate);
+			pnlDay.add(newDay);
+			pnlDay.add(btn);
+			highlight(pnlDay, newDay, i);
+			container.add(pnlDay);
 			btn.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
+					//Skapar ett pop-up fönster med ett info meddelande 
 					String event = JOptionPane.showInputDialog(null, "Add event", "Event", JOptionPane.INFORMATION_MESSAGE);
 					JButton remove = new JButton("X");
 					JLabel task = new JLabel(event);
@@ -83,22 +87,23 @@ class GUI {
 					remove.setAlignmentX(Component.CENTER_ALIGNMENT);
 					task.setAlignmentX(Component.CENTER_ALIGNMENT);
 					
-					newPanel.add(task);
-					newPanel.add(remove);
-					pnl.revalidate();
+					newDay.add(task);
+					newDay.add(remove);
+					pnlDay.revalidate();
 					
 					remove.addActionListener(new ActionListener(){
-						
+						//Tar bort en task när man klickat på "X"
 						public void actionPerformed(ActionEvent e) {
-		                    newPanel.remove(task);
-		                    newPanel.remove(remove);
-		                    newPanel.repaint();
+		                    newDay.remove(task);
+		                    newDay.remove(remove);
+		                    newDay.repaint();
 		                }
 		            });
 				}
 			});
 		}
 	}
+	//Ger dagens datum en higlight med annan färg 
 	
 	static void highlight(JPanel pnl, JPanel newPnl, int i){
 		Calendar cal = Calendar.getInstance();
@@ -109,6 +114,8 @@ class GUI {
 			newPnl.setBackground(new Color(207, 240, 204));
 		}
 	}
+	
+	//Rundar hörnen på panelerna 
 	
 	private static class RoundedBorder implements Border {
         
